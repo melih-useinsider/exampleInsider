@@ -20,6 +20,7 @@ import 'package:flutter_insider/enum/InsiderCallbackAction.dart';
 Future<void> main() async {
   runApp(const InsiderDemo());
 }
+
 class InsiderDemo extends StatelessWidget {
   const InsiderDemo({Key? key}) : super(key: key);
 
@@ -27,19 +28,19 @@ class InsiderDemo extends StatelessWidget {
     // FIXME-INSIDER: Please change with your partner name and app group.
     await FlutterInsider.Instance.init(
         "keretaapiindonesiauat", "group.com.useinsider.FlutterDemo",
-            (int type, dynamic data) {
-          switch (type) {
-            case InsiderCallbackAction.NOTIFICATION_OPEN:
-              print('[INSIDER][NOTIFICATION_OPEN]: $data');
-              break;
-            case InsiderCallbackAction.TEMP_STORE_CUSTOM_ACTION:
-              print('[INSIDER][TEMP_STORE_CUSTOM_ACTION]: $data');
-              break;
-            default:
-              print("[INSIDER][InsiderCallbackAction]: Unregistered Action!");
-              break;
-          }
-        });
+        (int type, dynamic data) {
+      switch (type) {
+        case InsiderCallbackAction.NOTIFICATION_OPEN:
+          print('[INSIDER][NOTIFICATION_OPEN]: $data');
+          break;
+        case InsiderCallbackAction.TEMP_STORE_CUSTOM_ACTION:
+          print('[INSIDER][TEMP_STORE_CUSTOM_ACTION]: $data');
+          break;
+        default:
+          print("[INSIDER][InsiderCallbackAction]: Unregistered Action!");
+          break;
+      }
+    });
 
     // This is an utility method, if you want to handle the push permission in iOS own your own you can omit the following method.
     FlutterInsider.Instance.setActiveForegroundPushView();
@@ -78,26 +79,18 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Image.asset(
-              'assets/images/insider-logo.png',
-              fit: BoxFit.none,
-              width: double.infinity,
-              height: 200,
-            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 10, 10, 10),
+                  padding: const EdgeInsets.fromLTRB(20, 50, 10, 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: const <Widget>[
                       Text(
                         '[Flutter] Insider SDK Demo',
                         style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 24
-                        ),
+                            fontWeight: FontWeight.bold, fontSize: 24),
                       ),
                       SizedBox(height: 10),
                       Text(
