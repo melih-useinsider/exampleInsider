@@ -1,5 +1,5 @@
 # Uncomment this line to define a global platform for your project
-platform :ios, '11.0'
+platform :ios, '12.0'
 use_frameworks!
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
@@ -27,10 +27,21 @@ require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelpe
 
 flutter_ios_podfile_setup
 
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    insider_targets = ["InsiderMobile", "InsiderGeofence", "InsiderMobileAdvancedNotification", "InsiderHybrid"]
+    if insider_targets.include?(target.name)
+      target.build_configurations.each do |config|
+        config.build_settings["ONLY_ACTIVE_ARCH"] = "YES"
+      end
+    end
+    flutter_additional_ios_build_settings(target)
+  end
+end
+
 target 'Runner' do
-  use_frameworks!
   use_modular_headers!
-  pod 'InsiderMobile'
+  
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end
 target 'InsiderNotificationContent' do
@@ -42,9 +53,4 @@ target 'InsiderNotificationService' do
   inherit! :search_paths
     # Pods for InsiderNotificationService
   pod "InsiderMobileAdvancedNotification"
-end
-post_install do |installer|
-  installer.pods_project.targets.each do |target|
-    flutter_additional_ios_build_settings(target)
-  end
 end
